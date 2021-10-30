@@ -1,9 +1,16 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const createError = require('http-errors');
 const compression = require('compression');
 const helmet = require('helmet');
 
 require('dotenv').config();
+
+// MongoDB Connection
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connectiorn error!'));
 
 const app = express();
 const routes = require('./routes');
@@ -25,7 +32,7 @@ app.use((err, req, res, next) => {
   const message = err.status === 404 ? 
     `The endpoint '${req.originalUrl}' does not exist` : 
     'Something went wrong on the server. Try it again later.';
-    
+
   const error = {
     status: err.status || 500,
     endpoint: req.originalUrl,
