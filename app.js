@@ -10,16 +10,20 @@ require('dotenv').config();
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connectiorn error!'));
+db.on('error', console.error.bind(console, 'MongoDB connection error!'));
 
 const app = express();
-const routes = require('./routes');
+const indexRoute = require('./routes');
+const postsRoute = require('./routes/post');
+const draftsRoute = require('./routes/draft');
 
 app.use(express.json());
 app.use(compression());
 app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
-app.use('/', routes);
+app.use('/', indexRoute);
+app.use('/posts', postsRoute);
+app.use('/drafts', draftsRoute);
 
 // Handle errors
 
