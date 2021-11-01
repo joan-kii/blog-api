@@ -15,7 +15,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error!'));
 const app = express();
 const indexRoute = require('./routes');
 const postsRoute = require('./routes/post');
-const draftsRoute = require('./routes/draft');
+const adminRoute = require('./routes/admin');
 
 app.use(express.json());
 app.use(compression());
@@ -23,7 +23,7 @@ app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', indexRoute);
 app.use('/posts', postsRoute);
-app.use('/drafts', draftsRoute);
+app.use('/admin', adminRoute);
 
 // Handle errors
 

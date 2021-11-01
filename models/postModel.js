@@ -10,13 +10,14 @@ const postSchema = new Schema({
   slug: {type: String, required: true}
 });
 
-postSchema.pre('validate', function() {
+postSchema.pre('validate', function(next) {
   if (this.title) {
     this.slug = slugify(this.title, {
       lower: true, 
       strict: true
     })
   }
+  next();
 });
 
 module.exports = mongoose.model('Post', postSchema);

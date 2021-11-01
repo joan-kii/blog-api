@@ -11,13 +11,14 @@ const draftSchema = new Schema({
   slug: {type: String, required: true}
 });
 
-draftSchema.pre('validate', function() {
+draftSchema.pre('validate', function(next) {
   if (this.title) {
     this.slug = slugify(this.title, {
       lower: true, 
       strict: true
     })
   }
+  next();
 });
 
 module.exports = mongoose.model('Draft', draftSchema);
