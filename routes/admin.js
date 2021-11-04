@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
+const admin_controller = require('../controllers/adminController');
 const draft_controller = require('../controllers/draftController');
 const post_controller = require('../controllers/postController');
+
+// Create New Admin
+router.post('/create', admin_controller.create_admin_post);
 
 // Admin Dashboard Posts
 router.get('/posts', post_controller.posts_list_get);

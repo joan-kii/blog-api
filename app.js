@@ -38,7 +38,7 @@ app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', indexRoute);
 app.use('/posts', postsRoute);
-app.use('/admin', passport.authenticate('jwt', { session: false }), adminRoute);
+app.use('/admin', /* passport.authenticate('jwt', { session: false }), */ adminRoute);
 
 // Handle errors
 
@@ -63,6 +63,6 @@ app.use((err, req, res, next) => {
   res.json(error);
 });
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log('App running!')
 });
