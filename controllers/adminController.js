@@ -4,7 +4,7 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-exports.create_admin_post = [
+/* exports.create_admin_post = [
   body('adminName', 'Admin Name required.')
       .trim()
       .isLength({min: 1})
@@ -73,7 +73,12 @@ exports.create_admin_post = [
       })
     }
   }
-];
+]; */
+
+exports.create_admin_post = function (req, res, next) {
+  console.log(req.body.adminName)
+  res.json(req.body);
+};
 
 exports.admin_login_post = [
   body('adminName', 'Admin Name required.')
