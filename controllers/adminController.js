@@ -76,7 +76,9 @@ const jwt = require('jsonwebtoken');
 ]; */
 
 exports.create_admin_post = function (req, res, next) {
-  console.log(req.body.adminName)
+  console.log('Content type', req.header('Content-Type'));
+  console.log(req.params);
+  /* console.log('Content type', req.header('Content-Type')); */
   res.json(req.body);
 };
 
