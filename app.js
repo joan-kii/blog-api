@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const createError = require('http-errors');
 const compression = require('compression');
 const helmet = require('helmet');
+const cors = require('cors');
 
 require('dotenv').config();
 
@@ -32,6 +33,7 @@ const indexRoute = require('./routes');
 const postsRoute = require('./routes/post');
 const adminRoute = require('./routes/admin');
 
+app.use(cors());
 app.use(express.json());
 app.use(compression());
 app.use(helmet());
