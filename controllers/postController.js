@@ -4,6 +4,7 @@ exports.posts_list_get = function(req, res, next) {
   Post.find({}, 'title description slug')
       .exec(function(err, posts) {
         if (err) next(err);
+        console.log(req.user)
         res.json(posts);
       })
 };

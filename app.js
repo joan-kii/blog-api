@@ -7,22 +7,6 @@ const cors = require('cors');
 
 require('dotenv').config();
 
-// Passport-jwt
-const passport = require('passport');
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-const options = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.ADMIN_PASSCODE
-};
-passport.use(new JwtStrategy(options, (payload, done) => {
-  if (payload) {
-    return done(null, true);
-  } else {
-    return done(null, false);
-  }
-}));
-
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
@@ -40,7 +24,7 @@ app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', indexRoute);
 app.use('/posts', postsRoute);
-app.use('/admin', /* passport.authenticate('jwt', { session: false }), */ adminRoute);
+app.use('/admin', adminRoute);
 
 // Handle errors
 
