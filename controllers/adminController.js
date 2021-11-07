@@ -13,7 +13,7 @@ exports.create_admin_post = [
       .isLength({min: 1})
       .withMessage('Enter your Admin name')
       .isAlphanumeric()
-      .withMessage('Enter only alphanumeric characters')
+      .withMessage('Admin Name must have only alphanumeric characters')
       .custom(async (value) => {
         const checkAdminName = await Admin.findOne({adminName: value});
         if (checkAdminName) {
@@ -29,14 +29,14 @@ exports.create_admin_post = [
       .isLength({min: 4})
       .withMessage('Password must have 4 characters at least')
       .isAlphanumeric()
-      .withMessage('Enter only alphanumeric characters')
+      .withMessage('Password must have only alphanumeric characters')
       .escape(),
   body('confirmPassword', 'Password confirmation required')
       .trim()
       .isLength({min: 4})
       .withMessage('Password must have 4 characters at least')
       .isAlphanumeric()
-      .withMessage('Enter only alphanumeric characters')
+      .withMessage('Passwordmust have only alphanumeric characters')
       .custom(async (value, { req }) => {
         if (value === req.body.password) {
           return true;
@@ -50,7 +50,7 @@ exports.create_admin_post = [
       .isLength({min: 12, max: 12})
       .withMessage('Wrong passcode length')
       .isAlphanumeric()
-      .withMessage('Enter only alphanumeric characters')
+      .withMessage('Password must have only alphanumeric characters')
       .custom(async (value) => {
         if (value === process.env.ADMIN_PASSCODE) {
           return true;
@@ -62,7 +62,7 @@ exports.create_admin_post = [
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.json({message: 'The admin has not been created', errors});
+      res.status(400).json({message: errors.array({onlyFirstError: true}), errors});
     } else {
       bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
         if (err) return next(err);
@@ -85,19 +85,19 @@ exports.admin_login_post = [
     .isLength({min: 1})
     .withMessage('Enter your Admin name')
     .isAlphanumeric()
-    .withMessage('Enter only alphanumeric characters')
+    .withMessage('Adm Name must have only alphanumeric characters')
     .escape(),
   body('password', 'Password required')
     .trim()
     .isLength({min: 4})
     .withMessage('Password must have 4 characters at least')
     .isAlphanumeric()
-    .withMessage('Enter only alphanumeric characters')
+    .withMessage('Password must have only alphanumeric characters')
     .escape(),
   (req, res, next) => {
-    const errors = validationResult();
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.json({message: 'Admin login not done', errors});
+      res.status(400).json({message: errors.array({onlyFirstError: true}), errors});
     } else {
       Admin.findOne({adminName: req.body.adminName}, 'adminName password')
            .exec((err, admin) => {
