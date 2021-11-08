@@ -102,11 +102,15 @@ exports.admin_login_post = [
       Admin.findOne({adminName: req.body.adminName}, 'adminName password')
            .exec((err, admin) => {
              if (err) res.json({message: 'Admin does not exist', errors: err});
-             bcrypt.compare(req.body.password, admin.password, (err, result) => {
-               if (err) res.status(401).json({message: 'Invalid password', errors: err});
+             bcrypt.compare(req.body.password, admin.password, (error, result) => {
+               if (err) res.status(500).json({
+                 message: 'Something wrong in the server. Try it later', 
+                 errors: error
+                })
+               if (!result) res.status(401).json({message: 'Invalid password', errors: error});
                if (result) {
                 const token = jwt.sign({ user: admin.adminName }, jwtSecret, jwtOptions);
-                res.status(200).json({message: 'Admin logged', token});
+                res.status(200).json({message: 'Admin logged', user: admin.adminName, token});
                }
              })
            })
