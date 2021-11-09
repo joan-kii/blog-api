@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
-// Passport-jwt
 const passport = require('passport');
 
 const admin_controller = require('../controllers/adminController');

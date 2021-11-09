@@ -10,17 +10,15 @@ require('dotenv').config();
 // Passport-jwt
 const passport = require('passport');
 const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
+const ExtractJWT = require('passport-jwt').ExtractJwt;
 const options = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.ADMIN_PASSCODE
 };
 passport.use(new JwtStrategy(options, (payload, done) => {
   if (payload) {
-    console.log(JSON.stringify(payload))
     return done(null, true);
   } else {
-    console.log(false)
     return done(null, false);
   }
 }));
@@ -35,6 +33,7 @@ const indexRoute = require('./routes');
 const postsRoute = require('./routes/post');
 const adminRoute = require('./routes/admin');
 
+app.use(passport.initialize());
 app.use(express.json());
 app.use(compression());
 app.use(cors());
