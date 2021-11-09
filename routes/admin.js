@@ -3,19 +3,6 @@ const router = express.Router();
 
 // Passport-jwt
 const passport = require('passport');
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-const options = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.ADMIN_PASSCODE
-};
-passport.use(new JwtStrategy(options, (payload, done) => {
-  if (payload) {
-    return done(null, true);
-  } else {
-    return done(null, false);
-  }
-}));
 
 const admin_controller = require('../controllers/adminController');
 const draft_controller = require('../controllers/draftController');
