@@ -10,6 +10,7 @@ exports.drafts_list_get = function(req, res, next) {
 
 exports.draft_create_get = function(req, res, next) {
   console.log(req.body)
+  res.json(req.body);
 };
 
 exports.draft_detail_get = function(req, res, next) {
