@@ -18,7 +18,7 @@ router.get('/posts/:slug', passport.authenticate('jwt', {session: false}), post_
 
 // Admin Dashboard Draft
 router.get('/drafts', passport.authenticate('jwt', {session: false}), draft_controller.drafts_list_get);
-router.post('/drafts/create', passport.authenticate('jwt', {session: false}), draft_controller.draft_create_get);
+router.post('/drafts/create', passport.authenticate('jwt', {session: false}), draft_controller.draft_create_post);
 router.get('/drafts/:slug', passport.authenticate('jwt', {session: false}), draft_controller.draft_detail_get);
 
 module.exports = router;
