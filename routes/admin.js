@@ -20,5 +20,6 @@ router.get('/posts/:slug', passport.authenticate('jwt', {session: false}), post_
 router.get('/drafts', passport.authenticate('jwt', {session: false}), draft_controller.drafts_list_get);
 router.post('/drafts/create', passport.authenticate('jwt', {session: false}), draft_controller.draft_create_post);
 router.get('/drafts/:slug', passport.authenticate('jwt', {session: false}), draft_controller.draft_detail_get);
+router.post('/drafts/update', passport.authenticate('jwt', {session: false}), draft_controller.draft_update_post);
 
 module.exports = router;
