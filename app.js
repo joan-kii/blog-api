@@ -58,6 +58,7 @@ app.use((err, req, res, next) => {
   const error = {
     status: err.status || 500,
     endpoint: req.originalUrl,
+    body: req.body,
     message: err.message
   };
 

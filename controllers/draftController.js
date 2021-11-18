@@ -15,21 +15,22 @@ exports.draft_create_post = [
     .trim()
     .isLength({min: 3})
     .withMessage('Title must have at least 3 characters.')
-    .isAlphanumeric()
+    .matches(/^[a-z0-9 ]+$/i)
     .withMessage('Title must have only alphanumeric characters.')
     .escape(),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).res.json({message: errors.array({onlyFirstError:true})});
+      console.log(errors)
+      res.status(400).json({message: errors.array({onlyFirstError:true})});
     } else {
-      const draft = new Darft({
+      const draft = new Draft({
         title: req.body.title,
         description: req.body.description,
         text: req.body.text,
-        note: req.body.notes
+        notes: req.body.notes
       }).save((err, saved) => {
-        if (err) res.staus(400).json({message: "Draft dont't saved."});
+        if (err) res.status(400).json({message: "Draft dont't saved."});
         res.status(200).json({message: 'Draft saved.', saved});
       });
     }
