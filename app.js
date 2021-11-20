@@ -34,9 +34,9 @@ const postsRoute = require('./routes/post');
 const adminRoute = require('./routes/admin');
 
 app.use(passport.initialize());
+app.use(cors());
 app.use(express.json());
 app.use(compression());
-app.use(cors());
 app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', indexRoute);

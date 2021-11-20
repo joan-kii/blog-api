@@ -22,7 +22,6 @@ exports.draft_create_post = [
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log(errors)
       res.status(400).json({message: errors.array({onlyFirstError:true})});
     } else {
       const draft = new Draft({

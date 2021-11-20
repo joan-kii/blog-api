@@ -14,6 +14,7 @@ router.post('/login', admin_controller.admin_login_post);
 
 // Admin Dashboard Posts
 router.get('/posts', passport.authenticate('jwt', {session: false}), post_controller.posts_list_get);
+router.post('/posts/publish', passport.authenticate('jwt', {session: false}), post_controller.posts_publish_post);
 router.get('/posts/:slug', passport.authenticate('jwt', {session: false}), post_controller.post_detail_get);
 
 // Admin Dashboard Draft
