@@ -8,7 +8,8 @@ const postSchema = new Schema({
   text: {type: String, required: true},
   description: {type: String, required: true},
   slug: {type: String, required: true},
-  published: {type: Boolean, required: true}
+  published: {type: Boolean, required: true},
+  comments: {type: Array, required: true}
 });
 
 postSchema.pre('validate', function(next) {
