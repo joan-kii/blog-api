@@ -17,11 +17,16 @@ router.get('/posts', passport.authenticate('jwt', {session: false}), post_contro
 router.post('/posts/publish', passport.authenticate('jwt', {session: false}), post_controller.posts_publish_post);
 router.get('/posts/:slug', passport.authenticate('jwt', {session: false}), post_controller.posts_detail_get);
 router.post('/posts/comments', passport.authenticate('jwt', {session: false}), post_controller.posts_delete_comment_post);
+router.delete('/posts/delete', passport.authenticate('jwt', {session: false}), post_controller.posts_delete);
+router.post('/posts/convert', passport.authenticate('jwt', {session: false}), post_controller.posts_convert_post);
+
 
 // Admin Dashboard Draft
 router.get('/drafts', passport.authenticate('jwt', {session: false}), draft_controller.drafts_list_get);
 router.post('/drafts/create', passport.authenticate('jwt', {session: false}), draft_controller.draft_create_post);
+router.post('/drafts/publish', passport.authenticate('jwt', {session: false}), draft_controller.drafts_publish_post);
 router.get('/drafts/:slug', passport.authenticate('jwt', {session: false}), draft_controller.draft_detail_get);
 router.post('/drafts/update', passport.authenticate('jwt', {session: false}), draft_controller.draft_update_post);
+router.delete('/drafts/delete', passport.authenticate('jwt', {session: false}), draft_controller.drafts_delete);
 
 module.exports = router;

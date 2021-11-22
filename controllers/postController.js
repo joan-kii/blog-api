@@ -1,4 +1,5 @@
 const Post = require('../models/postModel');
+const Draft = require('../models/draftModel');
 
 exports.posts_list_get = function(req, res, next) {
   Post.find({}, 'title description slug published comments')
@@ -34,6 +35,29 @@ exports.posts_delete_comment_post = function(req, res, next) {
     post.save(err => {
       if (err) return next(err);
       res.status(200).send();
+    })
+  })
+};
+
+exports.posts_delete = function(req, res, next) {
+  Post.findOneAndRemove({slug: req.body.slug}, (err) => {
+    if (err) next(err);
+    res.status(200).send();
+  })
+};
+
+exports.posts_convert_post = function(req, res, next) {
+  Post.findOneAndDelete({slug: req.body.slug}, (err, post) => {
+    if (err) next(err);
+    const draft = new Draft({
+      title: post.title,
+      text: post.text,
+      description: post.description,
+      notes: '<p>Notes</p>'
+    });
+    draft.save(err => {
+      if (err) next(err);
+      return res.status(200).send();
     })
   })
 };

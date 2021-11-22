@@ -2,6 +2,7 @@ const { body, validationResult } = require('express-validator');
 const slugify = require('slugify');
 
 const Draft = require('../models/draftModel');
+const Post = require('../models/postModel');
 
 exports.drafts_list_get = function(req, res, next) {
   Draft.find({}, 'title description slug')
@@ -77,3 +78,26 @@ exports.draft_update_post = [
     }
   }
 ];
+
+exports.drafts_delete = function(req, res, next) {
+  Draft.findOneAndRemove({slug: req.body.slug}, (err) => {
+    if (err) next(err);
+    res.status(200).send();
+  })
+};
+
+exports.drafts_publish_post = function(req, res, next) {
+  Draft.findOneAndDelete({slug: req.body.slug}, (err, draft) => {
+    if (err) next(err);
+    const post = new Post({
+      title: draft.title,
+      text: draft.text,
+      description: draft.description,
+      published: true
+    });
+    post.save(err => {
+      if (err) next(err);
+      return res.status(200).send();
+    })
+  })
+};
