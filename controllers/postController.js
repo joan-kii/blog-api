@@ -2,6 +2,14 @@ const Post = require('../models/postModel');
 const Draft = require('../models/draftModel');
 
 exports.posts_list_get = function(req, res, next) {
+  Post.find({published: true}, 'title description slug comments')
+      .exec(function(err, posts) {
+        if (err) next(err);
+        res.json(posts);
+      })
+};
+
+exports.posts_list_admin_get = function(req, res, next) {
   Post.find({}, 'title description slug published comments')
       .exec(function(err, posts) {
         if (err) next(err);
