@@ -9,19 +9,19 @@ exports.posts_list_get = function(req, res, next) {
       })
 };
 
+exports.posts_detail_get = function(req, res, next) {
+  Post.findOne({slug: req.params.slug, published: true}, 'title text messages')
+      .exec(function(err, post) {
+        if (err) next(err);
+        res.json(post);
+      })
+};
+
 exports.posts_list_admin_get = function(req, res, next) {
   Post.find({}, 'title description slug published comments')
       .exec(function(err, posts) {
         if (err) next(err);
         res.json(posts);
-      })
-};
-
-exports.posts_detail_get = function(req, res, next) {
-  Post.findOne({slug: req.params.slug}, 'title text messages slug published')
-      .exec(function(err, post) {
-        if (err) next(err);
-        res.json(post);
       })
 };
 
