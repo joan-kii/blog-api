@@ -10,7 +10,7 @@ exports.posts_list_get = function(req, res, next) {
 };
 
 exports.posts_detail_get = function(req, res, next) {
-  Post.findOne({slug: req.params.slug, published: true}, 'title text messages')
+  Post.findOne({slug: req.params.slug, published: true}, 'title text comments')
       .exec(function(err, post) {
         if (err) next(err);
         res.json(post);
