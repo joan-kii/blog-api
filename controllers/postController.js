@@ -1,3 +1,5 @@
+const { body, validationResult } = require('express-validator');
+
 const Post = require('../models/postModel');
 const Draft = require('../models/draftModel');
 
@@ -10,12 +12,35 @@ exports.posts_list_get = function(req, res, next) {
 };
 
 exports.posts_detail_get = function(req, res, next) {
-  Post.findOne({slug: req.params.slug, published: true}, 'title text comments')
+  Post.findOne({slug: req.params.slug, published: true}, 'title text comments slug')
       .exec(function(err, post) {
         if (err) next(err);
         res.json(post);
       })
 };
+
+exports.add_comment_post = [
+  body('name', 'Name')
+    .trim()
+    .isLength({min: 2})
+    .withMessage('Your name must have at least 2 characters.')
+    .matches(/^[a-z0-9 ]+$/i)
+    .withMessage('Your name must have only alphanumeric characters.')
+    .escape(),
+  body('comment', 'Comment')
+    .trim()
+    .isLength({min: 2})
+    .withMessage('The comment must have at least 2 characters.')
+    .matches(/^[a-z0-9 .,?!()]+$/i)
+    .withMessage('Your name must have only alphanumeric characters.')
+    .escape(),
+  (req, res, next) => {
+    Post.updateOne({slug: req.params.slug}, {$push: {comments: req.body}}, (err) => {
+      if (err) next(err);
+      res.status(200).send();
+    })
+  }
+];
 
 exports.posts_list_admin_get = function(req, res, next) {
   Post.find({}, 'title description slug published comments')
