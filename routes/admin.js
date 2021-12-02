@@ -20,7 +20,6 @@ router.post('/posts/comments', passport.authenticate('jwt', {session: false}), p
 router.delete('/posts/delete', passport.authenticate('jwt', {session: false}), post_controller.posts_delete);
 router.post('/posts/convert', passport.authenticate('jwt', {session: false}), post_controller.posts_convert_post);
 
-
 // Admin Dashboard Draft
 router.get('/drafts', passport.authenticate('jwt', {session: false}), draft_controller.drafts_list_get);
 router.post('/drafts/create', passport.authenticate('jwt', {session: false}), draft_controller.draft_create_post);

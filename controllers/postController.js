@@ -35,6 +35,10 @@ exports.add_comment_post = [
     .withMessage('Your name must have only alphanumeric characters.')
     .escape(),
   (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({message: errors.array({onlyFirstError: true}), errors});
+    }
     Post.updateOne({slug: req.params.slug}, {$push: {comments: req.body}}, (err) => {
       if (err) next(err);
       res.status(200).send();
