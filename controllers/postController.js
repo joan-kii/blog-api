@@ -39,9 +39,10 @@ exports.add_comment_post = [
     if (!errors.isEmpty()) {
       res.status(400).json({message: errors.array({onlyFirstError: true}), errors});
     }
-    Post.updateOne({slug: req.params.slug}, {$push: {comments: req.body}}, (err) => {
+    Post.findOneAndUpdate({slug: req.params.slug}, 
+         {$push: {comments: req.body}}, {new: true}, (err, post) => {
       if (err) next(err);
-      res.status(200).send();
+      res.status(200).json(post);
     })
   }
 ];

@@ -6,8 +6,10 @@
 
 - NodeJS
 - ExpressJS
+- MongoDB
+- MongooseJS
 - PassportJS
-- JWT
+- JsonWebToken
 - BcryptJS
 - Slugify
 
