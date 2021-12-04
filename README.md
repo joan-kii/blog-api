@@ -15,7 +15,7 @@
 
 - [CMS Demo]()
 - [CMS Code](https://github.com/joan-kii/blog-cms)
-- [Blog Client Demo]()
+- [Blog Client Demo](https://blog-client-joan-kii.vercel.app/)
 - [Blog Client Code](https://github.com/joan-kii/blog-client)
 
 Deployed in Heroku.
